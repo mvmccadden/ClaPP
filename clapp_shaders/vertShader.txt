@@ -1,0 +1,19 @@
+#version 330 core
+
+in vec3 inColor;
+in vec3 inPos;
+in vec2 inTex;
+
+out vec3 fragColor;
+out vec2 fragTex;
+
+uniform mat4 obj;
+uniform mat4 view;
+uniform mat4 perspective;
+
+void main()
+{
+  gl_Position = perspective * view * obj * vec4(inPos, 1.0);
+  fragTex = inTex;
+  fragColor = inColor;
+}

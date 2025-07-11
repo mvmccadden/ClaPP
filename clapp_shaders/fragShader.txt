@@ -1,0 +1,13 @@
+#version 330 core
+
+in vec3 fragColor;
+in vec2 fragTex;
+
+uniform sampler2D inTexture;
+
+out vec4 fragment;
+
+void main()
+{
+  fragment = texture(inTexture, fragTex) * vec4(fragColor, 1.0);
+}
