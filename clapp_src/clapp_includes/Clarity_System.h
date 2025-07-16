@@ -1,14 +1,14 @@
 /*
- * Author:  Manoel McCadden
- * Data:    05-02-2025
- * Email:   manoel.mccadden@gmail.com
- * Github:  github.com/mvmccadden
+ *  \author  Manoel McCadden
+ *  \date    05-02-2025
+ *  \par    manoel.mccadden@gmail.com
+ *  \par    github.com/mvmccadden
  *
- * File:    Clarity_System.h
+ *  \file    Clarity_System.h
  *
- * Description:
- *  A baseline inheritance system used to define what a clarity system
- *  should look like and contain
+ *  \brief
+ *    A baseline inheritance system used to define what a clarity system
+ *    should look like and contain
 */
 #pragma once
 

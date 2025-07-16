@@ -1,12 +1,12 @@
-/*
- *  Author:  Manoel McCadden
- *  Data:    06-06-2025
- *  Email:   manoel.mccadden@gmail.com
- *  Github:  github.com/mvmccadden
+/*!
+ *  \author  Manoel McCadden
+ *  \date    06-06-2025
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
- *  File:    CIL_PlayerControllerSystem.cpp
+ *  \file    CIL_PlayerControllerSystem.cpp
  *
- *  Description:
+ *  \brief
  *    The implementation file for handling player input for entities
  *    and thier controllers
  */

@@ -1,12 +1,12 @@
-/*
- *  Author:  Manoel McCadden
- *  Data:    05-15-2025
- *  Email:   manoel.mccadden@gmail.com
- *  Github:  github.com/mvmccadden
+/*!
+ *  \author  Manoel McCadden
+ *  \date    05-15-2025
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
- *  File:    CPL_System.cpp
+ *  \file    CPL_System.cpp
  *
- *  Description:
+ *  \brief
  *    The implementation file for interacting with the physics system
  */
 

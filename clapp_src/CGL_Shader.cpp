@@ -1,13 +1,13 @@
-/*
- * Author:  Manoel McCadden
- * Data:    05-05-2025
- * Email:   manoel.mccadden@gmail.com
- * Github:  github.com/mvmccadden
+/*!
+ *  \author  Manoel McCadden
+ *  \date    05-05-2025
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
- * File:    CGL_Shader.cpp
+ *  \file    CGL_Shader.cpp
  *
- * Description:
- *  The implementation file for handing shader data in the CGL library
+ *  \brief
+ *    The implementation file for handing shader data in the CGL library
  */
 #include "clapp_includes/pch.h"
 

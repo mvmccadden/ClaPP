@@ -1,28 +1,18 @@
-/*
- * Author:  Manoel McCadden
- * Data:    05-01-2025
- * Email:   manoel.mccadden@gmail.com
- * Github:  github.com/mvmccadden
+/*!
+ *  \author  Manoel McCadden
+ *  \date    05-01-2025
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
- * File:    main.cpp
+ *  \file    main.cpp
  *
- * Description:
- *  This file is the entry point to the simple c++/glfw based 
- *  game engine known as Clarity++ or ClaPP
+ *  \brief
+ *    This file is the entry point to the simple c++/glfw based 
+ *    game engine known as Clarity++ or ClaPP
 */
 #include "clapp_includes/pch.h"
 
 #include "clapp_includes/Clarity_Engine.h"
-
-// NOTE: CHECKED FILES
-// ENGINE 
-//
-// TODO: CURRENTLY WORKING ON FILES
-// ECS
-//
-// NOTE: Partly Done
-// COMPONENT
-// 
 
 using namespace std;
 

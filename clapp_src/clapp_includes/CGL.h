@@ -1,15 +1,15 @@
-/*
- * Author:  Manoel McCadden
- * Data:    05-04-2025
- * Email:   manoel.mccadden@gmail.com
- * Github:  github.com/mvmccadden
+/*!
+ *  \author  Manoel McCadden
+ *  \date    05-04-2025
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
- * File:    CGL.h
+ *  \file    CGL.h
  *
- * Description:
- *  The interface file that wraps all CGL functionalities into a single 
- *  usable file for the generic user. Removing any unneccesary access to the
- *  inner workings and systems of the CGL 
+ *  \brief
+ *    The interface file that wraps all CGL functionalities into a single 
+ *    usable file for the generic user. Removing any unneccesary access to the
+ *    inner workings and systems of the CGL 
 */
 #pragma once
 

@@ -1,13 +1,13 @@
-/*
- * Author:  Manoel McCadden
- * Data:    07-10-2025
- * Email:   manoel.mccadden@gmail.com
- * Github:  github.com/mvmccadden
+/*!
+ *  \author  Manoel McCadden
+ *  \date    07-10-2025
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
- * File:    ClaPP_Engine.cpp
+ *  \file    ClaPP_Engine.cpp
  *
- * Description:
- *  Handles engine functionality and implementation for the ClaPP Project
+ *  \brief
+ *    Handles engine functionality and implementation for the ClaPP Project
 */
 
 // PCH and H file includes
@@ -76,16 +76,16 @@ bool Engine::Startup()
 
   // WARN: THIS IS THE DEFAULT ENTITY CREATION WHICH WILL BE REMOVED
   ENTITY_ID id = ecsManager.CreateEntity();
-  ecsManager.AddComponent(id, Component::C_MESH, new Mesh(Mesh::MESH_CUBE));
+  ecsManager.AddComponent(id, new Mesh(Mesh::MESH_CUBE));
   // TODO: Fix below note for accuracy in paths
   // NOTE: Since path is relative it must rely on .cpp location...
   // we need to fix this so that it relies on relation to executable
   // or build
-  ecsManager.AddComponent(id, Component::C_TEXTURE, new Texture(
+  ecsManager.AddComponent(id, new Texture(
     "../clapp_assets/3D_TEST.png"));
-  ecsManager.AddComponent(id, Component::C_TRANSFORM, new Transform()); 
-  ecsManager.AddComponent(id, Component::C_CONTROLLER, new Controller()); 
-  ecsManager.AddComponent(id, Component::C_PHYSICS, new Physics()); 
+  ecsManager.AddComponent(id, new Transform()); 
+  ecsManager.AddComponent(id, new Controller()); 
+  ecsManager.AddComponent(id, new Physics()); 
 
   // TODO: Create a readable lua script that takes in a set of player
   // input events to bind that are easily adjustable

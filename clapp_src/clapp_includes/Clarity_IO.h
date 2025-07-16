@@ -1,12 +1,12 @@
 /*
- *  Author:  Manoel McCadden
- *  Data:    05-03-2025
- *  Email:   manoel.mccadden@gmail.com
- *  Github:  github.com/mvmccadden
+ *  \author  Manoel McCadden
+ *  \date    05-03-2025
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
- *  File:    Clarity_IO.h
+ *  \file    Clarity_IO.h
  *
- *  Description:
+ *  \brief
  *    An interface for handling file io, message tracing/logging
  *    , and generic output
 */

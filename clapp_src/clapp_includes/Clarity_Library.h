@@ -1,12 +1,12 @@
 /*
- *  Author:  Manoel McCadden
- *  Data:    05-12-2025
- *  Email:   manoel.mccadden@gmail.com
- *  Github:  github.com/mvmccadden
+ *  \author  Manoel McCadden
+ *  \date    05-12-2025
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
- *  File:    Clarity_Library.h
+ *  \file    Clarity_Library.h
  *
- *  Description:
+ *  \brief
  *    A generic library system that holds different types of data for
  *    storage and easy access
 */

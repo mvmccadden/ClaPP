@@ -1,12 +1,12 @@
 /*
- *  Author:  Manoel McCadden
- *  Data:    05-15-2025
- *  Email:   manoel.mccadden@gmail.com
- *  Github:  github.com/mvmccadden
+ *  \author  Manoel McCadden
+ *  \date    05-15-2025
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
- *  File:    CGL_Transform.h
+ *  \file    CGL_Transform.h
  *
- *  Description:
+ *  \brief
  *    The interface file that hold transform data for a given entity
  */
 #pragma once

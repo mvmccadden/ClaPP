@@ -1,13 +1,13 @@
-/*
- * Author:  Manoel McCadden
- * Data:    05-05-2025
- * Email:   manoel.mccadden@gmail.com
- * Github:  github.com/mvmccadden
+/*!
+ *  \author  Manoel McCadden
+ *  \date    05-05-2025
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
- * File:    CGL_Shader.h
+ *  \file    CGL_Shader.h
  *
- * Description:
- *  The interface file for handing shader data in the CGL library
+ *  \brief
+ *    The interface file for handing shader data in the CGL library
 */
 #pragma once
 

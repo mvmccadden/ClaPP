@@ -1,14 +1,14 @@
-/*
- * Author:  Manoel McCadden
- * Data:    05-02-2025
- * Email:   manoel.mccadden@gmail.com
- * Github:  github.com/mvmccadden
+/*!
+ *  \author  Manoel McCadden
+ *  \date    05-02-2025
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
- * File:    CGL_MeshData.h
+ *  \file    CGL_MeshData.h
  *
- * Description:
- *  The interface file for the base class identity of what a mesh
- *  is within the Clarity Graphics Library
+ *  \brief
+ *    The interface file for the base class identity of what a mesh
+ *    is within the Clarity Graphics Library
 */
 
 #include <vector>

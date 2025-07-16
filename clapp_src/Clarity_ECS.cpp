@@ -1,12 +1,12 @@
-/*
- *  Author:  Manoel McCadden
- *  Data:    07-10-2025
- *  Email:   manoel.mccadden@gmail.com
- *  Github:  github.com/mvmccadden
+/*!
+ *  \author Manoel McCadden
+ *  \date    07-10-2025
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
- *  File:    Clarity_ECS.cpp
+ *  \file    Clarity_ECS.cpp
  *
- *  Description:
+ *  \brief
  *    An ECS manager that handles the creation, deletion, and managment of
  *    entites, components, and systems
 */
@@ -523,5 +523,5 @@ void ECS::AddWorldSingletonComponents()
   container->BindKey(KeyBindContainer::KEY_E
                       , KeyBindContainer::KEY_STATUS_DOWN, "RotateNegativeZ");
 
-  AddComponent(worldID, Component::C_INPUT, container);
+  AddComponent(worldID, container);
 }

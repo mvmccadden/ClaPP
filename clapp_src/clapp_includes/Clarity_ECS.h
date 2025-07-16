@@ -1,4 +1,4 @@
-/*
+/*!
  *  \author  Manoel McCadden
  *  \date    05-14-2025
  *  \par     manoel.mccadden@gmail.com

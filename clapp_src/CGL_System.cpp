@@ -1,15 +1,15 @@
-/*
- * Author:  Manoel McCadden
- * Data:    05-02-2025
- * Email:   manoel.mccadden@gmail.com
- * Github:  github.com/mvmccadden
+/*!
+ *  \author  Manoel McCadden
+ *  \date    05-02-2025
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
- * File:    CGL_System.cpp
+ *  \file    CGL_System.cpp
  *
- * Description:
- *  The implementation file for the system of the Clarity Graphics Library
- *  (CGL). This library provides a sort of wrapper over the base implementation 
- *  needed to run glfw/glad.
+ *  \brief
+ *    The implementation file for the system of the Clarity Graphics Library
+ *    (CGL). This library provides a sort of wrapper over the base implementation 
+ *    needed to run glfw/glad.
 */
 #include "clapp_includes/pch.h"
 

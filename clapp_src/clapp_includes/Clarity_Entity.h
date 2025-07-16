@@ -1,12 +1,12 @@
 /*
- *  Author:  Manoel McCadden
- *  Data:    05-14-2025
- *  Email:   manoel.mccadden@gmail.com
- *  Github:  github.com/mvmccadden
+ *  \author  Manoel McCadden
+ *  \date    05-14-2025
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
- *  File:    Clarity_Entity.h
+ *  \file    Clarity_Entity.h
  *
- *  Description:
+ *  \brief
  *    An abstract class used to define what an entity is
 */
 #pragma once

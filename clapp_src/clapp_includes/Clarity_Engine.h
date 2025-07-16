@@ -1,14 +1,14 @@
 /*
- * Author:  Manoel McCadden
- * Data:    05-03-2025
- * Email:   manoel.mccadden@gmail.com
- * Github:  github.com/mvmccadden
+ *  \author  Manoel McCadden
+ *  \date    05-03-2025
+ *  \par    manoel.mccadden@gmail.com
+ *  \par    github.com/mvmccadden
  *
- * File:    ClaPP_Engine.h
+ *  \file    ClaPP_Engine.h
  *
- * Description:
- *  An engine framework that handles system managment and eases the users
- *  interaction with the backend systems and libraries
+ *  \brief
+ *    An engine framework that handles system managment and eases the users
+ *    interaction with the backend systems and libraries
 */
 #pragma once
 

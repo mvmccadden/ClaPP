@@ -1,12 +1,12 @@
-/*
- *  Author:  Manoel McCadden
- *  Data:    06-22-2025
- *  Email:   manoel.mccadden@gmail.com
- *  Github:  github.com/mvmccadden
+/*!
+ *  \author  Manoel McCadden
+ *  \date    06-22-2025
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
- *  File:    Clarity_Clock.cpp
+ *  \file    Clarity_Clock.cpp
  *
- *  Description:
+ *  \brief
  *    An interface that handles time keeping mechanics of the engine/system
 */
 

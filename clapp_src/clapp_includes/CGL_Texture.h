@@ -1,14 +1,14 @@
-/*
- * Author:  Manoel McCadden
- * Data:    06-02-2025
- * Email:   manoel.mccadden@gmail.com
- * Github:  github.com/mvmccadden
+/*!
+ *  \author  Manoel McCadden
+ *  \date    06-02-2025
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
- * File:    CGL_Texture.h
+ *  \file    CGL_Texture.h
  *
- * Description:
- *  The interface file for the base class identity of what a texture
- *  is within the Clarity Graphics Library
+ *  \brief
+ *    The interface file for the base class identity of what a texture
+ *    is within the Clarity Graphics Library
  */
 #include <string>
 #include <stdint.h>

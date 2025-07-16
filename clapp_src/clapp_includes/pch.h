@@ -1,14 +1,14 @@
 /*
- * Author:  Manoel McCadden
- * Data:    05-02-2025
- * Email:   manoel.mccadden@gmail.com
- * Github:  github.com/mvmccadden
+ *  \author  Manoel McCadden
+ *  \date    05-02-2025
+ *  \par    manoel.mccadden@gmail.com
+ *  \par    github.com/mvmccadden
  *
- * File:    pch.h
+ *  \file    pch.h
  *
- * Description:
- *  Provides generic standard headers that don't change often and don;t
- *  need to be recompiled to simplify compilation
+ *  \brief
+ *    Provides generic standard headers that don't change often and don;t
+ *    need to be recompiled to simplify compilation
 */
 #pragma once
 

@@ -1,12 +1,12 @@
 /*
- *  Author:  Manoel McCadden
- *  Data:    05-20-2025
- *  Email:   manoel.mccadden@gmail.com
- *  Github:  github.com/mvmccadden
+ *  \author  Manoel McCadden
+ *  \date    05-20-2025
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
- *  File:    CIL_System.h
+ *  \file    CIL_System.h
  *
- *  Description:
+ *  \brief
  *    The interface file for interacting with the clarity input system
  */
 #pragma once
