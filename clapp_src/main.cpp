@@ -15,8 +15,14 @@
 #include "clapp_includes/Clarity_Engine.h"
 
 // NOTE: CHECKED FILES
-// enigine
+// ENGINE 
 //
+// TODO: CURRENTLY WORKING ON FILES
+// ECS
+//
+// NOTE: Partly Done
+// COMPONENT
+// 
 
 using namespace std;
 

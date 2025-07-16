@@ -13,8 +13,11 @@
 
 #include <cstdint>
 #include <vector>
+#include <array>
 #include <unordered_set>
 #include <bitset>
+#include <algorithm>
+#include <typeinfo>
 
 #include "Clarity_IO.h"
 
@@ -41,10 +44,45 @@ public:
     , C_PHYSICS
     , C_INPUT
     , C_CONTROLLER
+
+    , C_COUNT
+    , C_INVALID
+  };
+
+  inline const static std::array<std::string, C_COUNT> componentMap =
+  {
+    "Mesh"
+    , "Texture"
+    , "Transform"
+    , "Physics"
+    , "Input"
+    , "Controller"
   };
 
   Component() {}
   virtual ~Component() {}
+
+  const std::string &ToString(const COMPONENTS &component)
+  {
+    return componentMap[static_cast<int>(component)];
+  }
+
+  // TODO: Create a bi-direcitonal map to allow for easier 
+  // look up from string to enum
+  COMPONENTS ToEnum()
+  {
+    std::string typeName = typeid(*this).name();
+
+    for(int i = 0; i < C_COUNT; ++i)
+    {
+      if(componentMap[i] == typeName)
+      {
+        return static_cast<COMPONENTS>(i);
+      }
+    }
+
+    return C_INVALID;
+  }
 
 protected:
 };

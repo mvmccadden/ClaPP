@@ -1,12 +1,12 @@
 /*
- *  Author:  Manoel McCadden
- *  Data:    05-14-2025
- *  Email:   manoel.mccadden@gmail.com
- *  Github:  github.com/mvmccadden
+ *  \author  Manoel McCadden
+ *  \date    05-14-2025
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
- *  File:    ECS.h
+ *  \file    ECS.h
  *
- *  Description:
+ *  \brief
  *    An ECS manager that handles the creation, deletion, and managment of
  *    entites, components, and systems
 */
@@ -31,6 +31,17 @@ namespace ClaPP
 class ECS : public Clarity_System
 {
 public:
+  /*!
+   *  
+   */
+  enum ECS_ERR
+  {
+    ECS_NO_ERR = 0
+    , ECS_FAILED_TO_CREATE
+    , ECS_FAILED_TO_DELETE
+    , ECS_FAILED_TO_FIND
+  };
+
   ECS();
   ~ECS();
 
@@ -47,7 +58,6 @@ public:
 
   // Component Functions
   void AddComponent(const ENTITY_ID &id
-                    , const Component::COMPONENTS &componentType
                     , Component *component);
   void RemoveComponent(const ENTITY_ID &id
                        , const Component::COMPONENTS &componentType);
@@ -85,7 +95,7 @@ private:
              , COMPONENT_COUNT> components;
   std::unordered_set<ENTITY_ID> entities;
   std::queue<ENTITY_ID> deletedEntities;
-  std::unordered_map<ENTITY_ID, COMPONENT_SIGNATURE> componentSignatures;
+  std::unordered_map<ENTITY_ID, COMPONENT_SIGNATURE> entitySignatures;
 
   std::vector<Clarity_System *> systems;
 
@@ -99,6 +109,9 @@ private:
 
   // Component Updating
   void RemoveEntityComponents(const ENTITY_ID &id);
+
+  // Cleanup
+  void ClearEntities();
 
   // Singleton Methods
   void AddWorldSingletonComponents();

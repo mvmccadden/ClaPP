@@ -27,6 +27,9 @@
 using namespace std;
 using namespace ClaPP;
 
+// TODO: Adjust all component-related ECS methods to take component type
+// instead of taking an enum
+
 //=================//
 //= CTOR and DTOR =//
 //=================//
@@ -42,7 +45,9 @@ ECS::ECS() : Clarity_System("ECS"), worldID(NEW_ENTITY_ID++)
 
 ECS::~ECS()
 {
-  // TODO: Create a clear function for cleraing components
+  // NOTE: System cleanup is done in terminate so it MUST be called before
+  // the ECS is destroyed
+  ClearEntities();
 }
 
 //==================//
@@ -163,7 +168,7 @@ ECS::SYS_ERR ECS::Terminate()
 
 /*!
   *  Creates a new entity id that can be used to identity an entity.
-  *  Data in components can be added to the entity allowing different
+  *  Data in components can be added to the entity allowing for different
   *  systems to interact with it.
   *
   *  \returns
@@ -187,9 +192,16 @@ ENTITY_ID ECS::CreateEntity()
   return newID;
 }
 
+/*!
+ *  Remove an entity and it's components from all systems, maps, and sets
+ *  within the ECS
+ *
+ *  \param id
+ *    The ENTITY_ID being removed from the ECS and all its dependants
+ */
 void ECS::DeleteEntity(const ENTITY_ID &id)
 {
-  if(entities.find(id) == entities.end())
+  if(entities.find(id) != entities.end())
   {
     entities.erase(id);
     deletedEntities.push(id);
@@ -207,10 +219,22 @@ void ECS::DeleteEntity(const ENTITY_ID &id)
 //= Component Functions =//
 //=======================//
 
+/*!
+ *  Adds a component to a given entity by storing the component within
+ *  the component map based on it's type and parent entity
+ *
+ *  \param id
+ *    The entity that is having a component added to it
+ *  \param componentType
+ *    The type of the component being added
+ *  \param component
+ *    A raw pointer to the component being added
+ */
 void ECS::AddComponent(const ENTITY_ID &id
-                       , const Component::COMPONENTS &componentType
                        , Component *component)
 {
+  Component::COMPONENTS componentType = component->ToEnum();
+
   // Attempt to emplace a new component into the component tracker
   auto emplaced = components[
     static_cast<size_t>(componentType)].try_emplace(id, component);
@@ -224,12 +248,12 @@ void ECS::AddComponent(const ENTITY_ID &id
 
   // Identity if a signature already exists
   std::unordered_map<ENTITY_ID, COMPONENT_SIGNATURE>::iterator signature 
-    = componentSignatures.find(id);
+    = entitySignatures.find(id);
 
-  if(signature == componentSignatures.end())
+  if(signature == entitySignatures.end())
   {
     // If not then create a new signature
-    auto emplaced = componentSignatures.try_emplace(id);
+    auto emplaced = entitySignatures.try_emplace(id);
     if(!emplaced.second)
     {
       ErrMessage("Failed to allocate a new component signature for"
@@ -241,35 +265,41 @@ void ECS::AddComponent(const ENTITY_ID &id
     signature = emplaced.first;
   }
 
-  // Set the signatures corresponding bit
+  // Set the signatures corresponding bit to true
   signature->second.set(static_cast<size_t>(componentType));
 
   // Update the systems
   UpdateEntityInSystems(id);
 }
 
+/*!
+ *  Removes a component from a given entity
+ *
+ *  \param id
+ *    The entity being adjusted
+ *  \param componentType
+ *    The component being removed from the given entity
+ *
+ *    TODO: ADJUST COMPONENT ENUM TO TYPE
+ */
 void ECS::RemoveComponent(const ENTITY_ID &id
                           , const Component::COMPONENTS &componentType)
 {
   // Get the signature from the given id
   std::unordered_map<ENTITY_ID, COMPONENT_SIGNATURE>::iterator signature
-    = componentSignatures.find(id);
+    = entitySignatures.find(id);
 
-  if(signature == componentSignatures.end())
+  if(signature == entitySignatures.end())
   {
-    ErrMessage("Signature not found with entity id: " 
+    ErrMessage("Signature not found for given entity: " 
                + std::to_string(id), ECSERR);
     return;
   }
 
   size_t componentID = static_cast<size_t>(componentType);
 
-  // If the component is found in the signature then turn it off to ensure
-  // the signature is accurate
-  if(signature->second.test(componentID))
-  {
-    signature->second.reset(componentID);
-  }
+  // Sets the corresponding components bit to false
+  signature->second.reset(componentID);
 
   // Attempt to locate the component being deleted
   std::unordered_map<ENTITY_ID, Component *>::iterator component
@@ -282,7 +312,8 @@ void ECS::RemoveComponent(const ENTITY_ID &id
     return;
   }
 
-  // Remove the component from the id-sorted map and delete it
+  // Deallocate the component then erase it from the component map
+  // TODO: Rework with new allocation method once implemented
   delete component->second;
   components[componentID].erase(component);
 
@@ -294,10 +325,32 @@ void ECS::RemoveComponent(const ENTITY_ID &id
 //= System Functions =//
 //====================//
 
+/*!
+ *  Adds a system to the ECS system list. Goes through active entity set
+ *  and adds any entities with matching signatures to the system to the
+ *  systems entity set
+ *
+ *  \param system
+ *    The system being added to the ECS
+ *
+ */
 void ECS::AddSystem(Clarity_System *system)
 {
+  // TODO: Remove the ecs ptr that each system has to enforce using
+  // only the active ECS
   system->ecsPtr = this;
   systems.push_back(system);
+
+  const COMPONENT_SIGNATURE &systemSignature = system->systemSignature;
+
+  for(const ENTITY_ID &entity : entities) 
+  {
+    // Compare the signatures and add to the system if that are compatible
+    if(entitySignatures[entity] == systemSignature)
+    {
+      system->AddEntityInSystem(entity);
+    }
+  }
 }
 
 //======================//
@@ -352,7 +405,7 @@ void ECS::UpdateEntityInSystems(const ENTITY_ID &id)
 {
   // When adding entities, double check that each system can use it
   // i.e. the signatures are compatible with one another
-  COMPONENT_SIGNATURE entitySignature = componentSignatures[id];
+  COMPONENT_SIGNATURE entitySignature = entitySignatures[id];
 
   for(Clarity_System *&system : systems)
   {
@@ -399,6 +452,9 @@ void ECS::RemoveEntityFromAllSystems(const ENTITY_ID &id)
  */
 void ECS::RemoveEntityComponents(const ENTITY_ID &id)
 {
+  // TODO: Look into changing this so it uses the entities signature to find
+  // and delete components
+  
   // Get each component map from the components array and find the
   // desired entities component if it exists.
   for(std::unordered_map<ENTITY_ID, Component *> &map : components)
@@ -412,6 +468,20 @@ void ECS::RemoveEntityComponents(const ENTITY_ID &id)
       map.erase(component);
     }
   }
+}
+
+/*!
+ *  Handles removing and deleting all components 
+ *  and all entities to clear the ECS.
+ */
+void ECS::ClearEntities()
+{
+  for(const ENTITY_ID &entity : entities)
+  {
+    RemoveEntityComponents(entity);
+  }
+
+  entities.clear();
 }
 
 /*!
