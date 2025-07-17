@@ -51,12 +51,12 @@ public:
 
   inline const static std::array<std::string, C_COUNT> componentMap =
   {
-    "Mesh"
-    , "Texture"
-    , "Transform"
-    , "Physics"
-    , "Input"
-    , "Controller"
+    "Mesh"               // C_MESH
+    , "Texture"          // C_TEXTURE
+    , "Transform"        // C_TRANSFORM
+    , "Physics"          // C_PHYSICS
+    , "KeyBindContainer" // C_INPUT
+    , "Controller"       // C_CONTROLLER
   };
 
   Component();

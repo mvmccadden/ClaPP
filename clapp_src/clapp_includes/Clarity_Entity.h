@@ -7,7 +7,7 @@
  *  \file    Clarity_Entity.h
  *
  *  \brief
- *    An abstract class used to define what an entity is
+ *    An abstract type used to define what an entity is
 */
 #pragma once
 

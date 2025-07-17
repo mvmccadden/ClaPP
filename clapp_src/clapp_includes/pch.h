@@ -40,5 +40,6 @@
 #include <mutex>
 #include <exception>
 #include <locale>
+#include <typeinfo>
 
 #include "lua.hpp"

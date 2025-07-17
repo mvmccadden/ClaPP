@@ -98,6 +98,7 @@ ECS::SYS_ERR ECS::Update(float deltaTime)
   SYS_ERR err;
   for(Clarity_System *&system : systems)
   {
+  cout << typeid(*system).name() << endl;
     if((err = system->Update(deltaTime)) != SYS_NO_ERR)
     {
       return err;
@@ -156,7 +157,8 @@ ECS::SYS_ERR ECS::Terminate()
     {
       return err;
     }
-    delete *it;
+
+    memoryManager.Dealloc(*it);
   }
 
   return SYS_NO_ERR;
@@ -166,14 +168,6 @@ ECS::SYS_ERR ECS::Terminate()
 //= Entity Functions =//
 //====================//
 
-/*!
-  *  Creates a new entity id that can be used to identity an entity.
-  *  Data in components can be added to the entity allowing for different
-  *  systems to interact with it.
-  *
-  *  \returns
-  *    The new ENTITY_ID that was just created
-*/
 ENTITY_ID ECS::CreateEntity()
 {
   ENTITY_ID newID = 0u;
@@ -192,13 +186,6 @@ ENTITY_ID ECS::CreateEntity()
   return newID;
 }
 
-/*!
- *  Remove an entity and it's components from all systems, maps, and sets
- *  within the ECS
- *
- *  \param id
- *    The ENTITY_ID being removed from the ECS and all its dependants
- */
 void ECS::DeleteEntity(const ENTITY_ID &id)
 {
   if(entities.find(id) != entities.end())
@@ -219,21 +206,18 @@ void ECS::DeleteEntity(const ENTITY_ID &id)
 //= Component Functions =//
 //=======================//
 
-/*!
- *  Adds a component to a given entity by storing the component within
- *  the component map based on it's type and parent entity
- *
- *  \param id
- *    The entity that is having a component added to it
- *  \param componentType
- *    The type of the component being added
- *  \param component
- *    A raw pointer to the component being added
- */
 void ECS::AddComponent(const ENTITY_ID &id
                        , Component *component)
 {
   Component::COMPONENTS componentType = component->ToEnum();
+
+  if(componentType == Component::C_INVALID)
+  {
+    string str = "Failed to find component of type: ";
+    str += typeid(*component).name();
+    ErrMessage(str, ECSERR);
+    return;
+  }
 
   // Attempt to emplace a new component into the component tracker
   auto emplaced = components[
@@ -272,16 +256,6 @@ void ECS::AddComponent(const ENTITY_ID &id
   UpdateEntityInSystems(id);
 }
 
-/*!
- *  Removes a component from a given entity
- *
- *  \param id
- *    The entity being adjusted
- *  \param componentType
- *    The component being removed from the given entity
- *
- *    TODO: ADJUST COMPONENT ENUM TO TYPE
- */
 void ECS::RemoveComponent(const ENTITY_ID &id
                           , const Component::COMPONENTS &componentType)
 {
@@ -325,15 +299,6 @@ void ECS::RemoveComponent(const ENTITY_ID &id
 //= System Functions =//
 //====================//
 
-/*!
- *  Adds a system to the ECS system list. Goes through active entity set
- *  and adds any entities with matching signatures to the system to the
- *  systems entity set
- *
- *  \param system
- *    The system being added to the ECS
- *
- */
 void ECS::AddSystem(Clarity_System *system)
 {
   // TODO: Remove the ecs ptr that each system has to enforce using
@@ -357,13 +322,6 @@ void ECS::AddSystem(Clarity_System *system)
 //= Singleton Entities =//
 //======================//
 
-/*!
- *  Each ECS instance has a set of global variables such as the world which
- *  holds and handles singleton component data such as inputs
- *
- *  \returns
- *    A const reference to the world entity which holds input data
- */
 const ENTITY_ID &ECS::GetWorldID()
 {
   return worldID;
@@ -373,18 +331,6 @@ const ENTITY_ID &ECS::GetWorldID()
 //= Global Access Function =//
 //==========================//
 
-/*!
- *  There is always one active ECS (the last one to be called).
- *  Ideally there should only be one instance of any ECS but in the case
- *  that the user wants multiple ECS systems then this helps us minimze 
- *  ECS overlap.
- *
- * TODO: Ensure that only one ECS can be used per thread butttt systems witnin
- * the ecs can be in multiple threads
- *
- *  \returns 
- *    The currently active ECS instance
- */
 ECS *ECS::GetActiveECS()
 {
   return activeECS;
@@ -394,13 +340,6 @@ ECS *ECS::GetActiveECS()
 //= Private Methods =//
 //===================//
 
-/*!
- *  Updates all systems to either add, remove, or verify an entites existance
- *  based on the entity's and system's signature
- *
- *  \param id
- *    The entity which is being updated in all the systems
- */
 void ECS::UpdateEntityInSystems(const ENTITY_ID &id)
 {
   // When adding entities, double check that each system can use it
@@ -429,12 +368,6 @@ void ECS::UpdateEntityInSystems(const ENTITY_ID &id)
   }
 }
 
-/*!
- *  Remove a given entity from all systems within the ECS
- *
- *  \param id
- *    The entity which will be removed from all systems
- */
 void ECS::RemoveEntityFromAllSystems(const ENTITY_ID &id)
 {
   // Iterate through the system vector deleting all instances of the entity
@@ -444,12 +377,6 @@ void ECS::RemoveEntityFromAllSystems(const ENTITY_ID &id)
   }
 }
 
-/*!
- *  Handles removing all components of a given entity from the component map
- *
- *  \param id
- *    The id of the entity which will have it's components deleted
- */
 void ECS::RemoveEntityComponents(const ENTITY_ID &id)
 {
   // TODO: Look into changing this so it uses the entities signature to find
@@ -464,36 +391,23 @@ void ECS::RemoveEntityComponents(const ENTITY_ID &id)
     // Delete and remove any found components
     if(component != map.end())
     {
-      delete component->second;
+      memoryManager.Dealloc(component->second);
       map.erase(component);
     }
   }
 }
 
-/*!
- *  Handles removing and deleting all components 
- *  and all entities to clear the ECS.
- */
 void ECS::ClearEntities()
 {
   for(const ENTITY_ID &entity : entities)
   {
     RemoveEntityComponents(entity);
   }
+  RemoveEntityComponents(worldID);
 
   entities.clear();
 }
 
-/*!
- *  Handles the creation and intalization of the default world singleton 
- *  which tracks global behaviors such as input
- *
- *  TODO: Move input bindings into a key bindings script which can be loaded
- *  on launch
- *
- *  TODO: Create a function which loads the key binding script allowing for
- *  reloading on edit/save
- */
 void ECS::AddWorldSingletonComponents()
 {
   KeyBindContainer *container = KeyBindContainer::GetInstance();

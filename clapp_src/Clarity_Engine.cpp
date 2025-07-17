@@ -14,11 +14,12 @@
 #include "clapp_includes/pch.h"
 #include "clapp_includes/Clarity_Engine.h"
 
-// Base items included
+// Base items/utilities included
 #include "clapp_includes/Clarity_Component.h"
 #include "clapp_includes/Clarity_Entity.h"
 #include "clapp_includes/Clarity_System.h"
 #include "clapp_includes/Clarity_IO.h"
+#include "clapp_includes/Clarity_Memory.h"
 
 // Systems included
 #include "clapp_includes/CGL_System.h"
@@ -33,6 +34,8 @@
 #include "clapp_includes/CPL_Transform.h"
 #include "clapp_includes/CIL_Controller.h"
 
+
+
 using namespace std;
 using namespace ClaPP;
 
@@ -43,15 +46,10 @@ using namespace ClaPP;
 Engine::Engine()
 {
   // Adds the default systems to the ecs manager
-
-  ecsManager.AddSystem(new 
-                       CGL_System("Cliarity_Graphics_System"));
-  ecsManager.AddSystem(new 
-                       Input_System("Clarity_Input_System"));
-  ecsManager.AddSystem(new 
-                       PlayerControllerSystem("Clarity_PlayerControl_System"));
-  ecsManager.AddSystem(new 
-                       CPL_System("Clarity_Physics_System"));
+  ecsManager.AddSystem<CGL_System>("Clarity_Graphics_System");
+  ecsManager.AddSystem<Input_System>("Clarity_Input_System");
+  ecsManager.AddSystem<PlayerControllerSystem>("Clarity_Control_System");
+  ecsManager.AddSystem<CPL_System>("Clarity_Physics_System");
 }
 
 Engine::~Engine()
@@ -76,16 +74,15 @@ bool Engine::Startup()
 
   // WARN: THIS IS THE DEFAULT ENTITY CREATION WHICH WILL BE REMOVED
   ENTITY_ID id = ecsManager.CreateEntity();
-  ecsManager.AddComponent(id, new Mesh(Mesh::MESH_CUBE));
+  ecsManager.AddComponent<Mesh>(id, Mesh::MESH_CUBE);
   // TODO: Fix below note for accuracy in paths
   // NOTE: Since path is relative it must rely on .cpp location...
   // we need to fix this so that it relies on relation to executable
   // or build
-  ecsManager.AddComponent(id, new Texture(
-    "../clapp_assets/3D_TEST.png"));
-  ecsManager.AddComponent(id, new Transform()); 
-  ecsManager.AddComponent(id, new Controller()); 
-  ecsManager.AddComponent(id, new Physics()); 
+  ecsManager.AddComponent<Texture>(id, "../clapp_assets/3D_TEST.png");
+  ecsManager.AddComponent<Transform>(id); 
+  ecsManager.AddComponent<Controller>(id);
+  ecsManager.AddComponent<Physics>(id);
 
   // TODO: Create a readable lua script that takes in a set of player
   // input events to bind that are easily adjustable
@@ -94,7 +91,7 @@ bool Engine::Startup()
   // ------------------------------
   // [KEY | STATUS TRIGGER | EVENT]
   // ------------------------------
-
+  
   return true;
 }
 
