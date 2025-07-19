@@ -18,6 +18,7 @@
 #include "clapp_includes/CGL_System.h"
 #include "clapp_includes/Clarity_System.h"
 #include "clapp_includes/Clarity_IO.h"
+#include "clapp_includes/Clarity_EventManager.h"
 
 using namespace std;
 using namespace ClaPP;

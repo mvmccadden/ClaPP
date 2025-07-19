@@ -57,9 +57,6 @@ public:
   static void GraphicsError(int error, const char *details);
 
   // In reference to windows 3.1
-  inline static uint64_t WINDOWERR = 31313131;
-  inline static uint64_t GLFWERR = 98989898;
-  inline static uint64_t OPENGLERR = 10011001;
 private:
   bool isOpenGLInitialized = false;
   uint32_t windowSettings = 0;

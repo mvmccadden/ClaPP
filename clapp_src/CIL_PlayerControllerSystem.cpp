@@ -60,7 +60,7 @@ PlayerControllerSystem::SYS_ERR PlayerControllerSystem::Update(float deltaTime)
   // Make sure the container exists
   if(!container)
   {
-    ErrMessage("Failed to find input component in world", P_CONTROLERR);
+    ErrMessage("Failed to find input component in world", EC_INPUT);
     return SYS_FAILED_TO_UPDATE;
   }
   

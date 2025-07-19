@@ -74,7 +74,7 @@ CPL_System::SYS_ERR CPL_System::Update(float deltaTIme)
     {
       ErrMessage("Entity ID: " + std::to_string(entity)
                  + " has an invalid transform or physics component"
-                 , CPLSYSERR);
+                 , EC_PHYSICS);
       continue;
     }
 

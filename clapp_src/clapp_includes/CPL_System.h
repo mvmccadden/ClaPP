@@ -40,7 +40,6 @@ public:
   const glm::vec3 &GetGravityVec();
   void ResetGravityVec();
 
-  inline const static uint64_t CPLSYSERR = 42244224;
 private:
   inline const static glm::vec3 defaultGravityVec = {0.f, -9.81f, 0.f};
   glm::vec3 gravityVec;

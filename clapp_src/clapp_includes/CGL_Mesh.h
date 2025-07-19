@@ -73,7 +73,6 @@ public:
 
   const MeshData &GetMeshData();
 
-  inline static const uint64_t MESHERR = 85858585;
 private:
   MeshData *meshData;
 

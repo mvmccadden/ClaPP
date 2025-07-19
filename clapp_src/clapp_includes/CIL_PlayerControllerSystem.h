@@ -31,7 +31,6 @@ public:
   SYS_ERR Unload();
   SYS_ERR Terminate();
 
-  inline static const uint64_t P_CONTROLERR = 89495969;
 private:
 
 };

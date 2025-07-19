@@ -108,7 +108,7 @@ public:
       str += ", with error: ";
       str += e.what();
 
-      ErrMessage(str, MEMERRMSG);
+      ErrMessage(str, EC_MEMORY);
 
       return nullptr;
     }
@@ -149,8 +149,6 @@ private:
    */
   std::mutex countMutex;
 
-  //! The memory manager's error value
-  inline static const uint64_t MEMERRMSG = 73737373;
 };
 }
 

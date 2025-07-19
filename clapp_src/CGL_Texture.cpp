@@ -112,7 +112,7 @@ void Texture::BindTexture(const string &_filePath)
     }
     else
     {
-      ErrMessage("Invalid number of channels gotten from image", TEXERR);
+      ErrMessage("Invalid number of channels gotten from image", EC_GRAPHICS);
       // Free data before returning 
       stbi_image_free(imageData);
       return;
@@ -125,7 +125,7 @@ void Texture::BindTexture(const string &_filePath)
   }
   else
   {
-    ErrMessage("Failed to obtain given image from file path", TEXERR);
+    ErrMessage("Failed to obtain given image from file path", EC_GRAPHICS);
   }
 
   // Add the new texture to the library (it will check if it already exists)

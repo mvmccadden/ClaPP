@@ -1,8 +1,8 @@
 /*
  *  \author  Manoel McCadden
  *  \date    05-02-2025
- *  \par    manoel.mccadden@gmail.com
- *  \par    github.com/mvmccadden
+ *  \par     manoel.mccadden@gmail.com
+ *  \par     github.com/mvmccadden
  *
  *  \file    pch.h
  *

@@ -98,7 +98,6 @@ ECS::SYS_ERR ECS::Update(float deltaTime)
   SYS_ERR err;
   for(Clarity_System *&system : systems)
   {
-  cout << typeid(*system).name() << endl;
     if((err = system->Update(deltaTime)) != SYS_NO_ERR)
     {
       return err;
@@ -198,7 +197,7 @@ void ECS::DeleteEntity(const ENTITY_ID &id)
   else
   {
     ErrMessage("Failed to find given entity with ID: "
-                + std::to_string(id), ECSERR);
+                + std::to_string(id), EC_ECS);
   }
 }
 
@@ -215,7 +214,7 @@ void ECS::AddComponent(const ENTITY_ID &id
   {
     string str = "Failed to find component of type: ";
     str += typeid(*component).name();
-    ErrMessage(str, ECSERR);
+    ErrMessage(str, EC_ECS);
     return;
   }
 
@@ -226,7 +225,7 @@ void ECS::AddComponent(const ENTITY_ID &id
   if(!emplaced.second)
   {
     ErrMessage("Failed to add component to entity with id: " 
-                + std::to_string(id), ECSERR);
+                + std::to_string(id), EC_ECS);
     return;
   }
 
@@ -241,7 +240,7 @@ void ECS::AddComponent(const ENTITY_ID &id
     if(!emplaced.second)
     {
       ErrMessage("Failed to allocate a new component signature for"
-                  " entity id: " + std::to_string(id), ECSERR);
+                  " entity id: " + std::to_string(id), EC_ECS);
       return;
     }
 
@@ -266,7 +265,7 @@ void ECS::RemoveComponent(const ENTITY_ID &id
   if(signature == entitySignatures.end())
   {
     ErrMessage("Signature not found for given entity: " 
-               + std::to_string(id), ECSERR);
+               + std::to_string(id), EC_ECS);
     return;
   }
 
@@ -282,7 +281,7 @@ void ECS::RemoveComponent(const ENTITY_ID &id
   if(component == components[componentID].end())
   {
     ErrMessage("Failed to find component matching type and signature for "
-               "given id: " + std::to_string(id), ECSERR);
+               "given id: " + std::to_string(id), EC_ECS);
     return;
   }
 

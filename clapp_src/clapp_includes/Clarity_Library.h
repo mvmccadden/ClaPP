@@ -68,9 +68,9 @@ public:
     // the second is a bool checking for proper emplacement
     if(!emplaced.second)
     {
-      ErrMessage("Item already allocated at key: " + itemName + ", in type: " 
+      Message("Item already allocated at key: " + itemName + ", in type: " 
                  + typeid(T).name() + ".\nReturning existing item!"
-                 , LIBRARYERR);
+                 , SEVERITY_INFO);
 
       // Delete the pointer as it is assumed that the library would delete
       // it later
@@ -79,7 +79,7 @@ public:
     else
     {
       Message("Allocating item: " + itemName + " in " + typeid(T).name()
-              + " library.");
+              + " library.", SEVERITY_INFO);
     }
     
     storeItem = nullptr;
@@ -107,7 +107,8 @@ public:
       // As this might be intentional and we are checking if the item
       // doesn't exists, this is considered to not be an error
       Message("Item not allocated at key: " + itemName + ", in " 
-              + typeid(T).name() + " library." + ".\nReturning nullptr!");
+              + typeid(T).name() + " library." + ".\nReturning nullptr!"
+              , SEVERITY_WARNING);
       
       return nullptr;
     }
@@ -115,7 +116,6 @@ public:
     return it->second.get();
   }
 
-  inline static const uint64_t LIBRARYERR = 94399439;
 private:
   std::map<std::string, std::unique_ptr<T>> shelf;
 

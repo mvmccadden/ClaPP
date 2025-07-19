@@ -231,8 +231,6 @@ private:
 
   inline static ECS *activeECS = nullptr;
 
-  const static inline uint64_t ECSERR = 54235423;
-
   // System Updating
   /*!
   *  Updates all systems to either add, remove, or verify an entites existance

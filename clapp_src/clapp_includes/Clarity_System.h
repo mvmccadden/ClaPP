@@ -105,7 +105,7 @@ public:
       // As we intentionally let the remove and add entity check in the ECS
       // we will not report this as an error as it may be intended
       Message("Failed to find entity ID: " + std::to_string(id)
-                 + " in system: " + sysName);
+                 + " in system: " + sysName, SEVERITY_WARNING);
       return;
     }
     systemEntites.erase(id);
@@ -116,7 +116,7 @@ public:
     if(FindEntityInSystem(id))
     {
       Message("Entity ID: " + std::to_string(id) + " already exists"
-                 " in system: " + sysName);
+                + " in system: " + sysName, SEVERITY_WARNING);
       return;
     }
     systemEntites.insert(id);
@@ -145,7 +145,6 @@ protected:
   COMPONENT_SIGNATURE systemSignature;
   std::set<ENTITY_ID> systemEntites;
 private:
-  const static inline uint64_t SYSERR = 90901919;
   // Choosing not to mutex as systems are intended to be craeted at engine
   // initalization and shouldn't need thread saftey. This is also simply
   // to help with naming conventions internal so if it is thread specific

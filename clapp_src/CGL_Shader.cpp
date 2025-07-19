@@ -26,7 +26,7 @@ CGL_Shader::CGL_Shader(SHADERTYPE type, const char *_shaderPath)
 {
   if (!_shaderPath) 
   {
-    ErrMessage("NULL passed for shader path", SHADERNOTFOUND);
+    ErrMessage("NULL passed for shader path", EC_GENERICSHADER);
     return;
   }
 }
@@ -44,7 +44,7 @@ CGL_Shader &CGL_Shader::operator=(const CGL_Shader &other)
 
   if(other.shaderType != shaderType)
   {
-    ErrMessage("Attempting to copy shader of opposite type", SHADERNOTFOUND);
+    ErrMessage("Attempting to copy shader of opposite type", EC_GENERICSHADER);
   }
   shaderPath = other.shaderPath;
   shaderID = other.shaderID;
@@ -72,7 +72,7 @@ void CGL_Shader::DeleteShader()
     CGL_System::CheckGLError();
     shaderID = 0;
 
-    Message("Delete Shader");
+    Message("Delete Shader", SEVERITY_INFO);
   }
 }
 
@@ -89,7 +89,7 @@ bool CGL_Shader::CompileShader()
     shaderID = glCreateShader(GL_FRAGMENT_SHADER);
   } else 
   {
-    ErrMessage("Attempting to compile unknown shader type", 12351235);
+    ErrMessage("Attempting to compile unknown shader type", EC_GENERICSHADER);
     return false;
   }
   CGL_System::CheckGLError();
@@ -113,12 +113,12 @@ bool CGL_Shader::CompileShader()
   {
     char infoLog[512];
     glGetShaderInfoLog(shaderID, 512, NULL, infoLog);
-    ErrMessage(infoLog, VERTEXERR);
+    ErrMessage(infoLog, EC_VERTEXSHADER);
     return false;
   }
   CGL_System::CheckGLError();
 
-  Message("Compiled Shader from path: " + shaderPath);
+  Message("Compiled Shader from path: " + shaderPath, SEVERITY_INFO);
 
   return true;
 }
@@ -135,13 +135,13 @@ CGL_Program::CGL_Program(const CGL_Shader &vertexShader
   if (vertex.shaderType != CGL_Shader::VERTEX) 
   {
     ErrMessage("Incorrect shader types passed for vertex shader",
-               CGL_Shader::VERTEXERR);
+               EC_VERTEXSHADER);
     return;
   }
   if (fragment.shaderType != CGL_Shader::FRAGMENT) 
   {
     ErrMessage("Incorrect shader types passed for fragment shader",
-               CGL_Shader::FRAGMENTERR);
+               EC_FRAGMENTSHADER);
     return;
   }
 
@@ -161,7 +161,7 @@ void CGL_Program::DeleteProgram()
     CGL_System::CheckGLError();
     programID = 0;
 
-    Message("Delete Program");
+    Message("Delete Program", SEVERITY_INFO);
   }
 }
 
@@ -185,7 +185,7 @@ bool CGL_Program::LinkProgram()
   {
     char infoLog[512];
     glGetProgramInfoLog(programID, 512, NULL, infoLog);
-    ErrMessage(infoLog, PROGRAMERR);
+    ErrMessage(infoLog, EC_SHADERPROGRAM);
     return false;
   }
   CGL_System::CheckGLError();
@@ -194,19 +194,19 @@ bool CGL_Program::LinkProgram()
   CGL_System::CheckGLError();
   if(inColor == -1)
   {
-    ErrMessage("Failed to find inColor in shader", PROGRAMERR);
+    ErrMessage("Failed to find inColor in shader", EC_SHADERPROGRAM);
   }
   inPos = static_cast<unsigned int>(glGetAttribLocation(programID, "inPos"));
   CGL_System::CheckGLError();
   if(inPos == -1)
   {
-    ErrMessage("Failed to find inPos in shader", PROGRAMERR);
+    ErrMessage("Failed to find inPos in shader", EC_SHADERPROGRAM);
   }
   inTex = static_cast<unsigned int>(glGetAttribLocation(programID, "inTex"));
   CGL_System::CheckGLError();
   if(inTex == -1)
   {
-    ErrMessage("Failed to find inTex in shader", PROGRAMERR);
+    ErrMessage("Failed to find inTex in shader", EC_SHADERPROGRAM);
   }
 
   objMatrix = static_cast<unsigned int>(
@@ -214,24 +214,24 @@ bool CGL_Program::LinkProgram()
   CGL_System::CheckGLError();
   if(objMatrix == -1)
   {
-    ErrMessage("Failed to find obj in shader", PROGRAMERR);
+    ErrMessage("Failed to find obj in shader", EC_SHADERPROGRAM);
   }
   viewMatrix = static_cast<unsigned int>(
     glGetUniformLocation(programID, "view"));
   CGL_System::CheckGLError();
   if(viewMatrix == -1)
   {
-    ErrMessage("Failed to find view in shader", PROGRAMERR);
+    ErrMessage("Failed to find view in shader", EC_SHADERPROGRAM);
   }
   perspectiveMatrix = static_cast<unsigned int>(
     glGetUniformLocation(programID, "perspective"));
   CGL_System::CheckGLError();
   if(perspectiveMatrix == -1)
   {
-    ErrMessage("Failed to find perspective in shader", PROGRAMERR);
+    ErrMessage("Failed to find perspective in shader", EC_SHADERPROGRAM);
   }
 
-  Message("Compiled Program");
+  Message("Compiled Program", SEVERITY_INFO);
 
   return true;
 }

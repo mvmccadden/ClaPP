@@ -44,7 +44,6 @@ public:
 
   const TextureData &GetTextureData();
 
-  inline static const uint64_t TEXERR = 37873787;
 private:
   TextureData *textureData;
 

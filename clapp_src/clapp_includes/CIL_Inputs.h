@@ -136,7 +136,8 @@ public:
     // intentional
     if(it != keyBinds.end())
     {
-      Message("Binding new event to already bound key: " + std::to_string(key));
+      Message("Binding new event to already bound key: " + std::to_string(key)
+              , SEVERITY_INFO);
     }
 
     // Bind the key to the new event trigger
@@ -148,7 +149,7 @@ public:
     if(!emplaced.second)
     {
       ErrMessage("Failed to create bind for key: " + std::to_string(key)
-                 , KEYBINDERR);
+                 , EC_INPUT);
     }
   }
 
@@ -160,7 +161,7 @@ public:
     if(it == keyBinds.end())
     {
       ErrMessage("Attempting to unbind key that is not bound, key: " 
-                 + std::to_string(key), KEYBINDERR);
+                 + std::to_string(key), EC_INPUT);
 
       return;
     }
@@ -230,12 +231,10 @@ public:
     }
     else 
     {
-      ErrMessage("Failed to convert key to GLFW Code", KEYBINDERR);
+      ErrMessage("Failed to convert key to GLFW Code", EC_INPUT);
       return 0;
     }
   }
-
-  inline const static uint64_t KEYBINDERR = 10203040;
 
 private:
   // TODO: Add an array of maps that bind keys based on game "states"

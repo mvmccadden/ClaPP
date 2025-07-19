@@ -15,6 +15,7 @@
 
 #include "clapp_includes/Clarity_Entity.h"
 #include "clapp_includes/Clarity_IO.h"
+#include "clapp_includes/Clarity_LUA.h"
 #include "clapp_includes/Clarity_System.h"
 #include "clapp_includes/Clarity_Component.h"
 #include "clapp_includes/Clarity_ECS.h"
@@ -102,7 +103,7 @@ Input_System::SYS_ERR Input_System::Update(float deltaTime)
   // We must make sure that it has been properly created
   if(!container)
   {
-    ErrMessage("Failed to get input component for world", INPUTERR);
+    ErrMessage("Failed to get input component for world", EC_INPUT);
     return SYS_FAILED_TO_UPDATE;
   }
 

@@ -18,6 +18,8 @@
 
 #include "clapp_includes/Clarity_IO.h"
 #include "clapp_includes/Clarity_Library.h"
+#include "clapp_includes/Clarity_EventManager.h"
+#include "clapp_includes/Clarity_LUA.h"
 
 // NOTE: This is a temp include for the graphics system to make sure the
 // shaders and mesh work
@@ -47,8 +49,7 @@ Mesh::Mesh(const Mesh::MeshType &type, const std::string &name) {
 
   if (meshData == nullptr) {
     ErrMessage("Cannot find given meshdata with name: " + name +
-                   ". meshData is nullptr.",
-               Mesh::MESHERR);
+                   ". meshData is nullptr.", EC_GRAPHICS);
   }
 }
 
@@ -80,8 +81,7 @@ Mesh::MeshData *Mesh::AddMeshDataToLibrary(const std::string &filePath) {
 
   if (library.GetItem(meshData->name) != nullptr) {
     ErrMessage("Attempting to create duplicate mesh with name: " +
-                   meshData->name,
-               MESHERR);
+                   meshData->name, EC_GRAPHICS);
     return nullptr;
   }
 
@@ -116,7 +116,7 @@ Mesh::MeshData *Mesh::AddMeshDataToLibrary(const std::string &filePath) {
   int length;
   err = instance.GetFieldLength(length);
   if (length != 3) {
-    ErrMessage("Invalid amount of color values in mesh", MESHERR);
+    ErrMessage("Invalid amount of color values in mesh", EC_GRAPHICS);
     return nullptr;
   }
 
@@ -189,7 +189,7 @@ Mesh::MeshData *Mesh::AddMeshDataToLibrary(const std::string &filePath) {
   if(positions.size() != textureCoords.size())
   {
     ErrMessage("Invalid number of texture coords to positions for: "
-               + meshData->name, MESHERR);
+               + meshData->name, EC_GRAPHICS);
 
     // Make sure that the smaller of the two sizes is used to avoid
     // indexing outside of the bounds of the vertex
@@ -239,14 +239,14 @@ Mesh::~Mesh() {
   // This allows us to delete individual meshes easily without worry about
   // tracking when to the delete the meshData itself since it's shared
 
-  Message("Mesh Destroyed");
+  Message("Mesh Destroyed", SEVERITY_INFO);
 }
 
 const Mesh::MeshData &Mesh::GetMeshData() { return *meshData; }
 
 void Mesh::CreateMeshData(MeshData &meshData) {
   if (meshData.vertices.empty() || meshData.indices.empty()) {
-    ErrMessage("Empty list of vertices or indices given", MESHERR);
+    ErrMessage("Empty list of vertices or indices given", EC_GRAPHICS);
     return;
   }
 
@@ -275,5 +275,5 @@ void Mesh::CreateMeshData(MeshData &meshData) {
   glBindVertexArray(0);
   CGL_System::CheckGLError();
 
-  Message("Mesh Created");
+  Message("Mesh Created", SEVERITY_INFO);
 }

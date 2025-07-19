@@ -21,6 +21,7 @@
 #include "clapp_includes/Clarity_Memory.h"
 #include "clapp_includes/Clarity_System.h"
 #include "clapp_includes/Clarity_IO.h" 
+#include "clapp_includes/Clarity_EventManager.h" 
 #include "clapp_includes/CGL_Shader.h"
 #include "clapp_includes/CGL_Mesh.h"
 #include "clapp_includes/CGL_Texture.h"
@@ -29,6 +30,7 @@
 #include "clapp_includes/Clarity_ECS.h"
 
 #include "clapp_includes/g_pch.h"
+#include <string>
 
 using namespace std;
 using namespace ClaPP;
@@ -43,7 +45,7 @@ static void FramebufferSizeCallback(GLFWwindow *window, int width, int height)
   
   if(!sys)
   {
-    ErrMessage("FAILED TO RETRIEVE WINDOW USER POINTER", CGL_System::WINDOWERR);
+    ErrMessage("FAILED TO RETRIEVE WINDOW USER POINTER", EC_GRAPHICS);
     return;
   }
 
@@ -82,11 +84,9 @@ bool CGL_System::CheckWindowClose()
 
 CGL_System::SYS_ERR CGL_System::Initialize()
 {
-  Message(GetSysName() + " Initializing");
-
   if(!glfwInit())
   {
-    ErrMessage(GetSysName() + "Failed to init GLFW", GLFWERR);
+    ErrMessage(GetSysName() + "Failed to init GLFW", EC_GRAPHICS);
     return SYS_FAILED_TO_INITIALIZE;
   }
 
@@ -99,7 +99,7 @@ CGL_System::SYS_ERR CGL_System::Initialize()
 
   if(!windowData->window)
   {
-    ErrMessage(GetSysName() + "Failed to create GLFW window", WINDOWERR);
+    ErrMessage(GetSysName() + "Failed to create GLFW window", EC_GRAPHICS);
     glfwTerminate();
     return SYS_FAILED_TO_INITIALIZE;
   }
@@ -165,9 +165,6 @@ CGL_System::SYS_ERR CGL_System::Initialize()
 
 CGL_System::SYS_ERR CGL_System::Load()
 {
-  Message(GetSysName() + " Loading");
-
-
   return SYS_NO_ERR;
 }
 
@@ -263,8 +260,6 @@ CGL_System::SYS_ERR CGL_System::Render()
 
 CGL_System::SYS_ERR CGL_System::Unload()
 {
-  Message(GetSysName() + " Graphics Unloading");
-
   return SYS_NO_ERR;
 }
 
@@ -276,8 +271,6 @@ CGL_System::SYS_ERR CGL_System::Terminate()
   glfwTerminate();
 
   delete windowData;
-  
-  Message(GetSysName() + " Terminating");
 
   return SYS_NO_ERR;
 }
@@ -291,7 +284,6 @@ CGL_System::SYS_ERR CGL_System::InitOpenGL()
 
   if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
   {
-    cerr << "Failed to initialize GLAD" << endl;
     return SYS_FAILED_TO_INITIALIZE;
   }
 
@@ -322,8 +314,9 @@ void CGL_System::GraphicsError(int error, const char *details)
   char *message = new char[strlen(details) + strlen("Graphics Error: ") + 1];
   strcpy(message, "Graphics Error: ");
   strcat(message, details);
+  strcat(message, std::to_string(error).c_str());
 
-  ErrMessage(message, error);
+  ErrMessage(message, EC_GRAPHICS);
   
   delete[] message;
 }
@@ -344,7 +337,7 @@ void CGL_System::CGL_FramebufferSizeCallback(int width, int height)
 
   glViewport(0, 0, windowData->width, windowData->height);
 
-  Message(GetSysName() + " Window Resize");
+  Message(GetSysName() + " Window Resize", SEVERITY_INFO);
 
   // Update shaders and matrices
   // Trigger re-render as neeeded

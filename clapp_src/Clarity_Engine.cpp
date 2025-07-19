@@ -19,6 +19,7 @@
 #include "clapp_includes/Clarity_Entity.h"
 #include "clapp_includes/Clarity_System.h"
 #include "clapp_includes/Clarity_IO.h"
+#include "clapp_includes/Clarity_EventManager.h"
 #include "clapp_includes/Clarity_Memory.h"
 
 // Systems included

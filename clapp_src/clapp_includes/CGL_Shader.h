@@ -34,9 +34,6 @@ public:
   void DeleteShader();
   const unsigned int &GetShaderID();
 
-  inline static const uint64_t SHADERNOTFOUND = 12351235;
-  inline static const uint64_t VERTEXERR = 20202020;
-  inline static const uint64_t FRAGMENTERR = 303030303;
 private:
   friend class CGL_Program;
   

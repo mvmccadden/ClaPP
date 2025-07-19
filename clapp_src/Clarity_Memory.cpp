@@ -11,6 +11,7 @@
  *    , and tracking for the ClarityPlusPlus Suite 
 */
 
+#include "clapp_includes/Clarity_IO.h"
 #include "clapp_includes/pch.h"
 
 #include "clapp_includes/Clarity_Memory.h"
@@ -50,7 +51,7 @@ uint64_t MemoryManager::GetMemoryInUse()
 {
   if(deallocCount > allocCount)
   {
-    ErrMessage("More memory deallocated than allocated!", MEMERRMSG);
+    ErrMessage("More memory deallocated than allocated!", EC_MEMORY);
   }
 
   return allocCount - deallocCount;
